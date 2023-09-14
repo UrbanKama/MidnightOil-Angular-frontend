@@ -1,0 +1,7 @@
+<small *ngIf="signInErrorMsg">{{errorMsg}}</small>
+<form action="" autocomplete="off">
+    User name: <input type="text"  value="" name="username" autocomplete="" [(ngModel)]="username">
+    password: <input type="password" name="password" autocomplete="new-password" [(ngModel)]="password"/>
+
+    <Button (click)="signin()">Login</Button>
+</form> 
