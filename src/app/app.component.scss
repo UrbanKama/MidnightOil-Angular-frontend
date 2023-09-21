@@ -1,7 +1,14 @@
-svg#clouds {
-    position: fixed;
-    bottom: -160px;
-    left: -230px;
-    z-index: -10;
-    width: 1920px;
+mat-toolbar {
+  background: #002b5c;
+  display: flex;
+  justify-content: center;
+
+  h1 {
+      color: white;
   }
+
+  button {
+      position: absolute;
+      left: 0;
+  }
+}

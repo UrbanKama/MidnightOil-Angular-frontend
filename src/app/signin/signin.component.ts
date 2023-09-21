@@ -22,7 +22,7 @@ export class SigninComponent {
   signin(){
     if(this.username === 'Joe' && this.password === 'pass'){
       this.signInErrorMsg = false;
-      this.router.navigate(['dashboard']);
+      this.router.navigate(['dashboard', this.username]);
       console.log(this.username, this.password)
     } else {
       this.signInErrorMsg = true;
