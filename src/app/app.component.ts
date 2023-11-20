@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { environment } from 'src/environments/environment.prod';
 
 @Component({
   selector: 'app-root',
@@ -9,4 +10,5 @@ export class AppComponent {
   title = 'MidnightOil-frontend';
 
   name = 'Joseph';
+  // envName = environment.name
 }

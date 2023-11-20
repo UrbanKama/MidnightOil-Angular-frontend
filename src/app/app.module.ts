@@ -1,5 +1,6 @@
-import { NgModule } from '@angular/core';
+import { NgModule, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,6 +16,15 @@ import { MatSidenavModule } from '@angular/material/sidenav';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
+import { AuthenticationService } from './service/authentication.service';
+import { EmployeeService } from './service/employee.service';
+import { AuthInterceptor } from './interceptors/auth.interceptor';
+import { AuthenticationGuard } from './guard/authentication.guard';
+import { provideRouter } from '@angular/router';
+import { NotificationModule } from './notification.module';
+import { NotificationService } from './service/notification.service';
+import { LoginComponent } from './login/login.component';
+import { RegisterComponent } from './register/register.component';
 
 @NgModule({
   declarations: [
@@ -22,10 +32,13 @@ import { MatDividerModule } from '@angular/material/divider';
     SigninComponent,
     DashboardComponent,
     ErrorComponent,
-    HomeComponent
+    HomeComponent,
+    LoginComponent,
+    RegisterComponent
   ],
   imports: [
     BrowserModule,
+    HttpClientModule,
     AppRoutingModule,
     FormsModule,
     BrowserAnimationsModule,
@@ -33,9 +46,19 @@ import { MatDividerModule } from '@angular/material/divider';
     MatSidenavModule,
     MatButtonModule,
     MatIconModule,
-    MatDividerModule
+    MatDividerModule,
+    NotificationModule
   ],
-  providers: [],
+  providers: [ NotificationService, AuthenticationService, EmployeeService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, provideRouter([
+    {
+      path: '',
+      component: LoginComponent,
+      canActivate: [AuthenticationGuard]
+    }
+  ])],
+  schemas: [
+    CUSTOM_ELEMENTS_SCHEMA
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

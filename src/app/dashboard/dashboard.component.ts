@@ -1,7 +1,8 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import {BreakpointObserver } from '@angular/cdk/layout'
 import { MatSidenav } from '@angular/material/sidenav';
+import { AuthenticationService } from '../service/authentication.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -19,13 +20,21 @@ export class DashboardComponent implements OnInit {
 
   constructor(
     private route: ActivatedRoute,
-    private observer: BreakpointObserver){
+    private observer: BreakpointObserver,
+    private authenticationService: AuthenticationService,
+    private router: Router){
 
   }
 
   ngOnInit(): void {
     this.name = this.route.snapshot.params['name'];
     console.log(this.route.snapshot.params['name']);
+
+    if (this.authenticationService.isLoggedIn()){
+      this.router.navigateByUrl('/dashboard');
+    } else {
+      this.router.navigateByUrl('/login');
+    }
   }
 
   ngAfterViewInit() {
