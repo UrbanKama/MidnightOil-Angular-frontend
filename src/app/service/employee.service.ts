@@ -58,7 +58,7 @@ export class EmployeeService {
     formData.append('lastName', employee.lastName);
     formData.append('username', employee.username);
     formData.append('email', employee.email);
-    formData.append('role', employee.role);
+    formData.append('role', employee.roles);
     formData.append('profileImage', profileImage);
     formData.append('isActive', JSON.stringify(employee.active));
     formData.append('isNonLocked', JSON.stringify(employee.notLocked));

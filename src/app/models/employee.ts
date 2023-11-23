@@ -10,7 +10,7 @@ export class Employee {
     public profileImageUrl: string;
     public active: boolean;
     public notLocked: boolean;
-    public role: string;
+    public roles: string;
     public authorities: [];
 
 
@@ -21,7 +21,7 @@ export class Employee {
         this.email = '';
         this.active = false;
         this.notLocked = false;
-        this.role = '';
+        this.roles = '';
         this.authorities = [];
     }
 }

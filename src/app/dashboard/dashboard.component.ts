@@ -18,6 +18,10 @@ export class DashboardComponent implements OnInit {
 
   name = ''
 
+  userId = '';
+  username = '';
+  role = '';
+
   constructor(
     private route: ActivatedRoute,
     private observer: BreakpointObserver,
@@ -35,6 +39,8 @@ export class DashboardComponent implements OnInit {
     } else {
       this.router.navigateByUrl('/login');
     }
+
+    this.getUsername();
   }
 
   ngAfterViewInit() {
@@ -49,6 +55,26 @@ export class DashboardComponent implements OnInit {
         this.sidenav.open();
       }
     })
+  }
+
+  getUsername(): void{
+    var user = this.authenticationService.getEmployeeFromLocalCache();
+    this.username = user.username;
+    this.userId = user.userId;
+    switch (user.roles) {
+      case 'ROLE_USER':
+        this.role = 'Retail assistant';
+        break;
+      case 'ROLE_TEAM_MANAGER':
+        this.role = 'Team Manger';
+        break;
+      case 'ROLE_STORE_MANAGER':
+        this.role = 'Store Manager';
+        break;
+    }
+
+    console.log(user.roles);
+  
   }
 
   
