@@ -19,15 +19,15 @@
         <p class="role">{{role}}</p>
 
         <mat-divider></mat-divider>
-        <button mat-button class="menu-button">
+        <button mat-button class="menu-button" (click)="changeTitle('home')">
             <mat-icon>home</mat-icon>
             <span>Home</span>
         </button>
-        <button mat-button class="menu-button">
+        <button mat-button class="menu-button" (click)="changeTitle('profile')">
             <mat-icon>person</mat-icon>
             <span>Profile</span>
         </button>
-        <button mat-button class="menu-button">
+        <button mat-button class="menu-button" (click)="changeTitle('info')">
             <mat-icon>info</mat-icon>
             <span>About</span>
         </button>
@@ -35,8 +35,16 @@
 
     <mat-sidenav-content>
         <div class="content mat-elevation-z4">
-            <p>Welcome to your dashboard {{name}}</p>
+            <!-- <p>Welcome to your dashboard {{name}}</p> -->
+            <div *ngFor="let shift of overtimeShifts">
+                <p>{{shift?.shiftDate}}</p>
+                <p>{{shift?.shiftStartTime}}</p>
+                <p>{{shift?.shiftEndTime}}</p>
+                <p>{{shift?.department}}</p>
+                <p>{{shift?.coveredBy}}</p>
+            </div>
         </div>
+        
     </mat-sidenav-content>
 
 </mat-sidenav-container>

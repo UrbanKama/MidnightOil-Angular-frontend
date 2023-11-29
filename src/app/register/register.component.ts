@@ -38,7 +38,6 @@ export class RegisterComponent implements OnInit, OnDestroy {
           this.sendNotification(NotificationType.SUCCESS, `Employee Registered succesfully`);
         },
         (HttpErrorResponse: HttpErrorResponse) => {
-          console.log(HttpErrorResponse);
           this.sendNotification(NotificationType.ERROR, HttpErrorResponse.error.message);
           this.showLoading = false;
         }
