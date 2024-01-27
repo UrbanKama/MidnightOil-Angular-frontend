@@ -9,6 +9,14 @@ import { OvertimeService } from '../service/overtime.service';
 import { HttpErrorResponse } from '@angular/common/http';
 import { NotificationType } from '../enums/notification-type.enum';
 import { NotificationService } from '../service/notification.service';
+import { DatePipe, formatDate } from '@angular/common';
+
+export interface User {
+  selectedDate: Date;
+}
+export interface JSONUser {
+  selectedDate: string;
+}
 
 @Component({
   selector: 'app-dashboard',
@@ -32,9 +40,14 @@ export class DashboardComponent implements OnInit {
   username = '';
   role = '';
 
-  // OVEETIME VARIABLES
+  // OVERTIME VARIABLES
   public overtimeShifts: OvertimeShift[];
   private subscriptions: Subscription[] = [];
+
+  // CALENDAR VARIABLES
+  public calendarDate ='';
+  public DateData = formatDate(new Date(), 'dd-MM-yyyy', 'en');
+  public model_result: string = this.DateData;
 
   constructor(
     private route: ActivatedRoute,
@@ -42,13 +55,16 @@ export class DashboardComponent implements OnInit {
     private authenticationService: AuthenticationService,
     private overtimeService: OvertimeService,
     private notificationService: NotificationService,
-    private router: Router){
+    private router: Router
+    ){
 
   }
 
   ngOnInit(): void {
+
+    // this.user = this.DateData;
+
     this.name = this.route.snapshot.params['name'];
-    console.log(this.route.snapshot.params['name']);
 
     if (this.authenticationService.isLoggedIn()){
       this.router.navigateByUrl('/dashboard');
@@ -56,7 +72,9 @@ export class DashboardComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     this.getUsername();
-    this.getOvertimeShifts(true);
+    // this.getOvertimeShifts(true);
+
+    this.getAvailableOvertimeByDate(this.DateData);
   }
 
   ngAfterViewInit() {
@@ -71,6 +89,14 @@ export class DashboardComponent implements OnInit {
         this.sidenav.open();
       }
     })
+  }
+
+  // CALENDAR
+  onChange(args: any){
+    this.DateData = args.value;
+    this.model_result = formatDate(this.DateData, 'dd-MM-yyyy', 'en');
+    console.log(this.model_result)
+    this.getAvailableOvertimeByDate(this.model_result);
   }
 
   getUsername(): void{
@@ -95,15 +121,18 @@ export class DashboardComponent implements OnInit {
     this.titleSubject.next(title);
   }
 
-  public getOvertimeShifts(showNotification: boolean): void {
+  // GET AVAILABLE OVERTIME BY DATE
+  public getAvailableOvertimeByDate(date: string) {
+    console.log(date);
     this.subscriptions.push(
-      this.overtimeService.getOvertimeShifts().subscribe(
+      this.overtimeService.getAvailableOvertimeByDate(date).subscribe(
         (response: OvertimeShift[] | any) => {
           this.overtimeService.addOvertimeShiftsToLocalCache(response);
           this.overtimeShifts = response;
-          if (showNotification) {
-            this.sendNotification(NotificationType.SUCCESS, `${response.length} shift(s) loaded successfully`);
-          }
+          console.log(response);
+          // if(showNotification){
+          //   this.sendNotification(NotificationType.SUCCESS, `${response.length} shift(s) for ${this.DateData} loaded`);
+          // }
         },
         (errorResponse: HttpErrorResponse) => {
           this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
@@ -111,6 +140,23 @@ export class DashboardComponent implements OnInit {
       )
     )
   }
+
+  // public getOvertimeShifts(showNotification: boolean): void {
+  //   this.subscriptions.push(
+  //     this.overtimeService.getOvertimeShifts().subscribe(
+  //       (response: OvertimeShift[] | any) => {
+  //         this.overtimeService.addOvertimeShiftsToLocalCache(response);
+  //         this.overtimeShifts = response;
+  //         if (showNotification) {
+  //           this.sendNotification(NotificationType.SUCCESS, `${response.length} shift(s) loaded successfully`);
+  //         }
+  //       },
+  //       (errorResponse: HttpErrorResponse) => {
+  //         this.sendNotification(NotificationType.ERROR, errorResponse.error.message);
+  //       }
+  //     )
+  //   )
+  // }
 
   private sendNotification(notificationType: NotificationType, message: string): void {
     

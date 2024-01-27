@@ -25,6 +25,7 @@ import { NotificationModule } from './notification.module';
 import { NotificationService } from './service/notification.service';
 import { LoginComponent } from './login/login.component';
 import { RegisterComponent } from './register/register.component';
+import { CalendarModule, DatePickerModule, TimePickerModule, DateRangePickerModule, DateTimePickerModule } from '@syncfusion/ej2-angular-calendars';
 
 @NgModule({
   declarations: [
@@ -47,7 +48,8 @@ import { RegisterComponent } from './register/register.component';
     MatButtonModule,
     MatIconModule,
     MatDividerModule,
-    NotificationModule
+    NotificationModule,
+    CalendarModule, DatePickerModule, TimePickerModule, DateRangePickerModule, DateTimePickerModule
   ],
   providers: [ NotificationService, AuthenticationService, EmployeeService, { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true}, provideRouter([
     {

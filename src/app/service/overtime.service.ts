@@ -15,7 +15,12 @@ export class OvertimeService {
 
   // GET ALL OVERTIME SHIFTS
   public getOvertimeShifts(): Observable<OvertimeShift[] | HttpErrorResponse> {
-    return this.http.get<OvertimeShift[]>(`${this.host}/overtime/list`)
+    return this.http.get<OvertimeShift[]>(`${this.host}/overtime/allOvertime`)
+  }
+
+  // GET AVAILABLE OVERTIME BY DATE
+  public getAvailableOvertimeByDate(date: string): Observable<OvertimeShift[] | HttpErrorResponse> {
+    return this.http.get<OvertimeShift[]>(`${this.host}/overtime/availableOvertime/${date}`)
   }
 
   // CREATE AN OVERTIME SHIFT

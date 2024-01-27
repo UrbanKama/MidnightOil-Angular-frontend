@@ -34,14 +34,30 @@
     </mat-sidenav>
 
     <mat-sidenav-content>
-        <div class="content mat-elevation-z4">
-            <!-- <p>Welcome to your dashboard {{name}}</p> -->
-            <div *ngFor="let shift of overtimeShifts">
-                <p>{{shift?.shiftDate}}</p>
-                <p>{{shift?.shiftStartTime}}</p>
-                <p>{{shift?.shiftEndTime}}</p>
-                <p>{{shift?.department}}</p>
-                <p>{{shift?.coveredBy}}</p>
+        
+        <div class="content mat-elevation-z4" style="display: flex; align-items: end;">
+            <div style="border: 1px solid #eee; display: flex; padding: 8px; background-color: #002b5c;">
+                <div class="calendarContainer" style="height: 40vh;">
+                    <ejs-calendar [(value)]="calendarDate" (change)="onChange($event)"></ejs-calendar>
+                </div>
+                
+                <div style="padding: 4px;
+                width: fit-content;
+                height: 40vh;
+                margin-left: 6px;
+                overflow: auto;">
+                    <div style="margin-bottom: 8px;">
+                        <p class="selectedDate">Overtime For: {{model_result}}</p>
+                    </div>
+
+                    <div *ngFor="let shift of overtimeShifts" class="overtimeBox" >
+                        <p>Date: {{shift?.shiftDate}}</p>
+                        <p>Shift: {{shift?.shiftStartTime}} - {{shift?.shiftEndTime}}</p>
+                        <!-- <p>End: {{shift?.shiftEndTime}}</p> -->
+                        <p>Department: {{shift?.department}}</p>
+                        <!-- <p>{{shift?.coveredBy}}</p> -->
+                    </div>  
+                </div>
             </div>
         </div>
         

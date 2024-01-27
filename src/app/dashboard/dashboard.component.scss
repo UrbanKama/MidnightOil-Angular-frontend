@@ -68,11 +68,62 @@ mat-sidenav-container {
         margin: 16px;
         margin-left: 32px;
         display: flex;
-        justify-content: center;
-        align-items: center;
-
+        // justify-content: center;
+        // align-items: center;
+        padding: 14px;
         font-size: 2rem;
         color: lightgray;
         border-radius: 10px;
     }
+}
+
+.overtimeBox {
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    padding: 6px;
+    margin: 6px 10px 0px 0px;
+    color: black;
+    background-color: #fff;
+    height: fit-content;
+    display: inline-block;
+    padding: 20px;
+    justify-content: center;
+
+    p {
+        margin: 4px 4px;
+        font-size: 12px;
+    }
+}
+.overtimeBox:hover {
+    border: 1px solid #e3165b;
+    background-color: #eee;
+    cursor: pointer;
+}
+.overtimeBox:focus {
+    background-color: #e3165b;
+    color: white;
+}
+
+// CALENDAR
+.selectedDate {
+    margin-top: 14px;
+    // border: 1px solid grey;
+    border-radius: 4%;
+    padding: 2px;
+    width: fit-content;
+    background-color: #fff;
+    box-shadow: rgba(0, 0, 0, 0.16) 0px 1px 4px;
+    color: black;
+    font-weight: 400;
+    font-size: 18px;
+    display: inline;
+}
+
+.e-calendar {
+    max-width: 450px;
+    border-radius: 2%;
+    margin-right: 10px;
+    height: 348px;
+}
+::ng-deep .e-calendar .e-content span.e-day, .e-bigger.e-small .e-calendar .e-content span.e-day {
+    border-radius: 20% !important;
 }
